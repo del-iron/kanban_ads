@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board de Tarefas</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Cabeçalho da aplicação -->
+    <header class="app-header">
+      <div class="logo">
+        <i class="fas fa-tasks"></i>
+        <span>Gerenciador Kanban</span>
+      </div>
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Pesquisar em tudo...">
+        <span class="shortcut">Ctrl + K</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-task"><i class="fas fa-plus"></i> Tarefa</button>
+        <div class="user-profile">
+          <img src="https://via.placeholder.com/32" alt="Perfil" class="avatar">
+        </div>
+      </div>
+    </header>
+
+    <!-- Estrutura principal da aplicação -->
+    <div class="main-container">
+      <!-- Sidebar esquerda -->
+      <aside class="sidebar">
+        <nav class="main-nav">
+          <ul class="nav-items">
+            <li class="nav-item active">
+              <i class="fas fa-home"></i>
+              <span>Início</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-inbox"></i>
+              <span>Caixa de entrada</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-reply"></i>
+              <span>Respostas</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-sticky-note"></i>
+              <span>Posts</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-redo"></i>
+              <span>FollowUps</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-chart-line"></i>
+              <span>Atividade</span>
+            </li>
+            <li class="nav-item">
+              <i class="fas fa-pencil-alt"></i>
+              <span>Rascunhos e enviadas</span>
+            </li>
+          </ul>
+
+          <div class="sidebar-section">
+            <div class="section-header">
+              <span>Favoritos</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-header">
+              <span>Recentes</span>
+            </div>
+            <ul class="section-items">
+              <li class="section-item">
+                <i class="fas fa-list"></i>
+                <span>Projeto 1</span>
+                <span class="badge">3</span>
+              </li>
+              <li class="section-item">
+                <i class="fas fa-list"></i>
+                <span>Lista pessoal</span>
+              </li>
+              <li class="section-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Tarefa 1</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="section-header">
+              <span>Espaços</span>
+              <button class="btn-icon"><i class="fas fa-plus"></i></button>
+            </div>
+            <ul class="section-items">
+              <li class="section-item">
+                <i class="fas fa-tasks"></i>
+                <span>All Tasks</span>
+              </li>
+              <li class="section-item">
+                <i class="fas fa-users"></i>
+                <span>Espaço da equipe</span>
+                <i class="fas fa-chevron-down"></i>
+              </li>
+              <li class="section-item sub-item">
+                <i class="fas fa-folder"></i>
+                <span>Projetos</span>
+              </li>
+              <li class="section-item sub-item">
+                <i class="fas fa-list"></i>
+                <span>Projeto 1</span>
+                <span class="badge">3</span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Conteúdo principal -->
+      <main class="content">
+        <!-- Cabeçalho do projeto -->
+        <div class="project-header">
+          <div class="project-title">
+            <h1>Projeto 1</h1>
+            <div class="project-info">
+              <span class="project-status">Público</span>
+              <span class="separator">•</span>
+              <span class="project-location">
+                <i class="fas fa-users"></i> 
+                Espaço da equipe / Projetos
+              </span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Agentes</button>
+            <button class="btn btn-outline"><i class="fas fa-bolt"></i> Automatizar</button>
+            <button class="btn btn-outline"><i class="fas fa-share"></i> Compartilhar</button>
+            <button class="btn btn-outline"><i class="fas fa-robot"></i> IA</button>
+          </div>
+        </div>
+
+        <!-- Navegação do projeto -->
+        <div class="project-nav">
+          <ul class="view-tabs">
+            <li class="view-tab active"><i class="fas fa-list"></i> Lista</li>
+            <li class="view-tab"><i class="fas fa-th-large"></i> Quadro</li>
+            <li class="view-tab"><i class="fas fa-calendar"></i> Calendário</li>
+            <li class="view-tab"><i class="fas fa-chart-bar"></i> Gantt</li>
+            <li class="view-tab"><i class="fas fa-table"></i> Tabela</li>
+          </ul>
+          <div class="view-actions">
+            <button class="btn btn-outline"><i class="fas fa-filter"></i> Filtro</button>
+            <button class="btn btn-outline"><i class="fas fa-lock"></i> Fechado</button>
+            <button class="btn btn-outline"><i class="fas fa-user"></i> Responsável</button>
+            <button class="btn btn-primary">Adicionar Tarefa</button>
+          </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-container">
+          <!-- Coluna "Backlog" -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-archive status-icon"></i>
+                <span>BACKLOG</span>
+                <span class="task-count">0</span>
+              </div>
+              <div class="column-actions">
+                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="task-list">
+              <div class="add-task">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Tarefa</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna "A Fazer" -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-tasks status-icon"></i>
+                <span>A FAZER</span>
+                <span class="task-count">0</span>
+              </div>
+              <div class="column-actions">
+                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="task-list">
+              <div class="add-task">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Tarefa</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna "Em Progresso" -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-spinner status-icon in-progress"></i>
+                <span>EM PROGRESSO</span>
+                <span class="task-count">2</span>
+              </div>
+              <div class="column-actions">
+                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            
+            <div class="task-list">
+              <div class="task-card" draggable="true">
+                <div class="task-content">
+                  <h3 class="task-title">Tarefa 1</h3>
+                </div>
+                <div class="task-meta">
+                  <div class="task-assignee">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="task-status">
+                    <i class="fas fa-spinner status-icon in-progress"></i>
+                    <span>EM PROGRESSO</span>
+                  </div>
+                  <div class="task-actions">
+                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
+                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="task-card" draggable="true">
+                <div class="task-content">
+                  <h3 class="task-title">Tarefa importante</h3>
+                </div>
+                <div class="task-meta">
+                  <div class="task-assignee">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="task-status">
+                    <i class="fas fa-spinner status-icon in-progress"></i>
+                    <span>EM PROGRESSO</span>
+                  </div>
+                  <div class="task-actions">
+                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
+                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="add-task">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Tarefa</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Coluna "Em Revisão/Teste" -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-check status-icon review"></i>
+                <span>EM REVISÃO/TESTE</span>
+                <span class="task-count">2</span>
+              </div>
+              <div class="column-actions">
+                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            
+            <div class="task-list">
+              <div class="task-card" draggable="true">
+                <div class="task-content">
+                  <h3 class="task-title">Tarefa 2</h3>
+                </div>
+                <div class="task-meta">
+                  <div class="task-assignee">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="task-status">
+                    <i class="fas fa-check status-icon review"></i>
+                    <span>EM REVISÃO/TESTE</span>
+                  </div>
+                  <div class="task-actions">
+                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
+                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="task-card" draggable="true">
+                <div class="task-content">
+                  <h3 class="task-title">Tarefa 3</h3>
+                </div>
+                <div class="task-meta">
+                  <div class="task-assignee">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div class="task-status">
+                    <i class="fas fa-check status-icon review"></i>
+                    <span>EM REVISÃO/TESTE</span>
+                  </div>
+                  <div class="task-actions">
+                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
+                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="add-task">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Tarefa</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna "Concluído" -->
+          <div class="kanban-column">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-check-circle status-icon completed"></i>
+                <span>CONCLUÍDO</span>
+                <span class="task-count">0</span>
+              </div>
+              <div class="column-actions">
+                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="task-list">
+              <div class="add-task">
+                <i class="fas fa-plus"></i>
+                <span>Adicionar Tarefa</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Adicionar nova coluna -->
+          <div class="add-column">
+            <button class="btn-add-column">
+              <i class="fas fa-plus"></i>
+              <span>Novo status</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
