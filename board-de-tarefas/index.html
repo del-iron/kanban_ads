@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Board de Tarefas</title>
+  <title>Kavod</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
@@ -13,7 +13,7 @@
     <header class="app-header">
       <div class="logo">
         <i class="fas fa-tasks"></i>
-        <span>Gerenciador Kanban</span>
+        <span>Gerenciador de Tarefas - Kavod</span>
       </div>
       <div class="search-bar">
         <i class="fas fa-search"></i>
@@ -126,7 +126,6 @@
         <!-- Cabeçalho do projeto -->
         <div class="project-header">
           <div class="project-title">
-            <h1>Projeto 1</h1>
             <div class="project-info">
               <span class="project-status">Público</span>
               <span class="separator">•</span>
@@ -136,6 +135,7 @@
               </span>
             </div>
           </div>
+
           <div class="project-actions">
             <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Agentes</button>
             <button class="btn btn-outline"><i class="fas fa-bolt"></i> Automatizar</button>
@@ -225,17 +225,26 @@
                   <h3 class="task-title">Tarefa 1</h3>
                 </div>
                 <div class="task-meta">
-                  <div class="task-assignee">
-                    <i class="fas fa-user"></i>
-                  </div>
                   <div class="task-status">
                     <i class="fas fa-spinner status-icon in-progress"></i>
                     <span>EM PROGRESSO</span>
                   </div>
-                  <div class="task-actions">
-                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
-                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+                  <div class="task-dates">
+                    <small><strong>Início:</strong> <span class="start-date"></span></small>
+                    <small>
+                      <strong>Final:</strong>
+                      <input type="date" class="end-date" />
+                    </small>
                   </div>
+                  <div class="task-progress">
+                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
+                    <progress class="progress-bar" value="0" max="100"></progress>
+                    <small class="progress-percentage">0%</small>
+                  </div>
+                </div>
+                <div class="task-actions">
+                  <button class="btn-icon"><i class="fas fa-comment"></i></button>
+                  <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
                 </div>
               </div>
               
@@ -250,6 +259,18 @@
                   <div class="task-status">
                     <i class="fas fa-spinner status-icon in-progress"></i>
                     <span>EM PROGRESSO</span>
+                  </div>
+                  <div class="task-dates">
+                    <p><strong>Início:</strong> <span class="start-date"></span></p>
+                    <p>
+                      <strong>Final:</strong>
+                      <input type="date" class="end-date" />
+                    </p>
+                  </div>
+                  <div class="task-progress">
+                    <label for="progress-bar"><strong>Progresso:</strong></label>
+                    <progress class="progress-bar" value="0" max="100"></progress>
+                    <span class="progress-percentage">0%</span>
                   </div>
                   <div class="task-actions">
                     <button class="btn-icon"><i class="fas fa-comment"></i></button>
@@ -292,6 +313,18 @@
                     <i class="fas fa-check status-icon review"></i>
                     <span>EM REVISÃO/TESTE</span>
                   </div>
+                  <div class="task-dates">
+                    <p><strong>Início:</strong> <span class="start-date"></span></p>
+                    <p>
+                      <strong>Final:</strong>
+                      <input type="date" class="end-date" />
+                    </p>
+                  </div>
+                  <div class="task-progress">
+                    <label for="progress-bar"><strong>Progresso:</strong></label>
+                    <progress class="progress-bar" value="0" max="100"></progress>
+                    <span class="progress-percentage">0%</span>
+                  </div>
                   <div class="task-actions">
                     <button class="btn-icon"><i class="fas fa-comment"></i></button>
                     <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
@@ -310,6 +343,18 @@
                   <div class="task-status">
                     <i class="fas fa-check status-icon review"></i>
                     <span>EM REVISÃO/TESTE</span>
+                  </div>
+                  <div class="task-dates">
+                    <p><strong>Início:</strong> <span class="start-date"></span></p>
+                    <p>
+                      <strong>Final:</strong>
+                      <input type="date" class="end-date" />
+                    </p>
+                  </div>
+                  <div class="task-progress">
+                    <label for="progress-bar"><strong>Progresso:</strong></label>
+                    <progress class="progress-bar" value="0" max="100"></progress>
+                    <span class="progress-percentage">0%</span>
                   </div>
                   <div class="task-actions">
                     <button class="btn-icon"><i class="fas fa-comment"></i></button>
@@ -345,7 +390,20 @@
               </div>
             </div>
           </div>
-          
+
+          <!-- Coluna "Lixeira" -->
+          <div class="kanban-column trash-bin">
+            <div class="column-header">
+              <div class="column-title">
+                <i class="fas fa-trash-alt status-icon"></i>
+                <span>Lixeira</span>
+              </div>
+            </div>
+            <div class="task-list">
+              Arraste tarefas aqui para excluir
+            </div>
+          </div>
+
           <!-- Adicionar nova coluna -->
           <div class="add-column">
             <button class="btn-add-column">

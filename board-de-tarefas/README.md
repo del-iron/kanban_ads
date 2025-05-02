@@ -1,6 +1,6 @@
-# Board de Tarefas
+# Gerenciador de Tarefas - Kavod
 
-Este é um projeto interativo de um board de tarefas para organização e gerenciamento de atividades, com funcionalidades como drag and drop e adição dinâmica de tarefas.
+**Kavod** é uma palavra de origem hebraica que significa "honra" ou "glória". Este sistema foi desenvolvido para ajudar na organização e gerenciamento de tarefas, promovendo eficiência e produtividade com um design intuitivo e funcionalidades interativas.
 
 ## Funcionalidades
 
