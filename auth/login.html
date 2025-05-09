@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+    <div class="top-bar">
+        Não tem uma conta? <a href="php/users/register.php" class="btn-top-bar">Criar uma conta</a>
+    </div>
+    <div class="container">
+        <h2>Bem-vindo de volta!</h2>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <form id="login-form">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            
+            <button type="submit">Entrar</button>
+        </form>
+        <a class="link" href="#">Esqueci minha senha?</a>
+    </div>
+    <div class="footer-text">
+        Este site é protegido pelo Jardel e regido pela política de privacidade e pelos termos de serviço da Adese.
+    </div>
+    <script src="js/auth.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorMessage = urlParams.get('erro');
+        if (errorMessage) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = decodeURIComponent(errorMessage);
+            errorDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

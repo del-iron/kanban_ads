@@ -79,6 +79,15 @@ function createTask(column, title) {
           <input type="date" class="end-date" />
         </p>
       </div>
+      <div class="task-priority">
+        <label for="priority-select"><strong>Prioridade:</strong></label>
+        <select class="priority-select">
+          <option value="urgente">Urgente</option>
+          <option value="alta">Alta</option>
+          <option value="normal" selected>Normal</option>
+          <option value="baixa">Baixa</option>
+        </select>
+      </div>
       <div class="task-progress">
         <label for="progress-bar"><strong>Progresso:</strong></label>
         <input type="range" class="progress-bar" value="0" max="100" />
@@ -96,6 +105,7 @@ function createTask(column, title) {
   initDragEvents(taskCard);
   initTaskProgress(taskCard);
   initDeleteTask(taskCard); // Inicializa a funcionalidade de exclusão
+  initPrioritySelect(taskCard); // Inicializa a funcionalidade de prioridade
 }
 
 // Inicializa a funcionalidade de exclusão de tarefa
@@ -299,6 +309,16 @@ function initTrashBin() {
         }
         taskList.classList.remove('drag-over'); // Remove o estilo visual
       }
+    });
+  }
+}
+
+function initPrioritySelect(taskCard) {
+  const prioritySelect = taskCard.querySelector('.priority-select');
+  if (prioritySelect) {
+    prioritySelect.addEventListener('change', () => {
+      const priority = prioritySelect.value;
+      taskCard.setAttribute('data-priority', priority); // Define a prioridade como atributo
     });
   }
 }

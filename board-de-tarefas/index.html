@@ -21,10 +21,12 @@
         <span class="shortcut">Ctrl + K</span>
       </div>
       <div class="header-actions">
-        <button class="btn btn-task"><i class="fas fa-plus"></i> Tarefa</button>
+        <button id="add-task-btn" class="btn btn-task"><i class="fas fa-plus"></i> Tarefa</button>
+        <span id="user-name" class="user-name"></span>
         <div class="user-profile">
           <img src="https://via.placeholder.com/32" alt="Perfil" class="avatar">
         </div>
+        <button id="logout-btn" class="logout-btn">Sair</button>
       </div>
     </header>
 
@@ -164,7 +166,7 @@
         <!-- Kanban Board -->
         <div class="kanban-container">
           <!-- Coluna "Backlog" -->
-          <div class="kanban-column">
+          <div class="kanban-column" data-coluna-id="1">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-archive status-icon"></i>
@@ -173,19 +175,14 @@
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+                <button class="btn-icon add-task-btn" data-coluna-id="1"><i class="fas fa-plus"></i></button>
               </div>
             </div>
-            <div class="task-list">
-              <div class="add-task">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Tarefa</span>
-              </div>
-            </div>
+            <div class="task-list"></div>
           </div>
 
           <!-- Coluna "A Fazer" -->
-          <div class="kanban-column">
+          <div class="kanban-column" data-coluna-id="2">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-tasks status-icon"></i>
@@ -194,19 +191,14 @@
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+                <button class="btn-icon add-task-btn" data-coluna-id="2"><i class="fas fa-plus"></i></button>
               </div>
             </div>
-            <div class="task-list">
-              <div class="add-task">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Tarefa</span>
-              </div>
-            </div>
+            <div class="task-list"></div>
           </div>
 
           <!-- Coluna "Em Progresso" -->
-          <div class="kanban-column">
+          <div class="kanban-column" data-coluna-id="3">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-spinner status-icon in-progress"></i>
@@ -215,7 +207,7 @@
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+                <button class="btn-icon add-task-btn" data-coluna-id="3"><i class="fas fa-plus"></i></button>
               </div>
             </div>
             
@@ -287,7 +279,7 @@
           </div>
           
           <!-- Coluna "Em Revisão/Teste" -->
-          <div class="kanban-column">
+          <div class="kanban-column" data-coluna-id="4">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-check status-icon review"></i>
@@ -371,7 +363,7 @@
           </div>
 
           <!-- Coluna "Concluído" -->
-          <div class="kanban-column">
+          <div class="kanban-column" data-coluna-id="5">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-check-circle status-icon completed"></i>
@@ -380,7 +372,7 @@
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+                <button class="btn-icon add-task-btn" data-coluna-id="5"><i class="fas fa-plus"></i></button>
               </div>
             </div>
             <div class="task-list">
@@ -417,5 +409,162 @@
   </div>
 
   <script src="js/script.js"></script>
+  <script>
+    // Redirecionar para a página de login se o usuário não estiver logado
+    if (sessionStorage.getItem('loggedIn') !== 'true') {
+      window.location.href = '../auth/login.html';
+    }
+
+    // Exibir o nome do usuário no canto superior direito
+    const userName = sessionStorage.getItem('userName');
+    if (userName) {
+        document.getElementById('user-name').textContent = `Bem-vindo, ${userName}`;
+    }
+
+    // Função para deslogar o usuário
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        sessionStorage.clear(); // Limpar o estado de login
+        window.location.href = '../auth/login.html'; // Redirecionar para a página de login
+    });
+
+    // Função para adicionar uma nova tarefa
+    async function adicionarTarefa(colunaId) {
+        const titulo = prompt("Digite o título da tarefa:");
+        if (titulo) {
+            const usuarioId = sessionStorage.getItem('userId') || null; // Obtém o ID do usuário logado ou define como NULL
+            const novaTarefa = {
+                titulo: titulo.trim(),
+                usuario_id: usuarioId,
+                coluna_id: colunaId,
+                data_inicio: new Date().toISOString().split('T')[0], // Data atual no formato YYYY-MM-DD
+                data_final: null, // Sem data final definida inicialmente
+                prioridade: "Normal", // Prioridade padrão
+                progresso: 0 // Progresso inicial
+            };
+
+            try {
+                // Envia os dados para o backend
+                const response = await fetch('../auth/php/tasks/add_task.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(novaTarefa),
+                });
+
+                const result = await response.json();
+
+                // Certifique-se de que o card só será criado após a confirmação do backend
+                if (result.success) {
+                    const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"] .task-list`);
+                    if (coluna) {
+                        // Cria o card com os dados retornados pelo backend
+                        const taskCard = document.createElement('div');
+                        taskCard.classList.add('task-card');
+                        taskCard.setAttribute('draggable', 'true');
+                        taskCard.setAttribute('data-task-id', result.id); // Adiciona o ID da tarefa
+                        taskCard.innerHTML = `
+                            <div class="task-content">
+                                <h3 class="task-title">${novaTarefa.titulo}</h3>
+                            </div>
+                            <div class="task-meta">
+                                <div class="task-status">
+                                    <i class="fas fa-spinner status-icon in-progress"></i>
+                                    <span>${novaTarefa.prioridade}</span>
+                                </div>
+                                <div class="task-dates">
+                                    <small><strong>Início:</strong> ${novaTarefa.data_inicio}</small>
+                                    <small><strong>Final:</strong> Não definido</small>
+                                </div>
+                                <div class="task-progress">
+                                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
+                                    <progress class="progress-bar" value="${novaTarefa.progresso}" max="100"></progress>
+                                    <small class="progress-percentage">${novaTarefa.progresso}%</small>
+                                </div>
+                            </div>
+                        `;
+                        coluna.appendChild(taskCard);
+                        atualizarContagemTarefas(colunaId);
+                    }
+                } else {
+                    alert("Erro ao salvar a tarefa no banco de dados: " + result.message);
+                }
+            } catch (error) {
+                console.error("Erro ao salvar a tarefa:", error);
+                alert("Erro ao salvar a tarefa no banco de dados.");
+            }
+        }
+    }
+
+    // Atualizar contagem de tarefas em cada coluna
+    function atualizarContagemTarefas(colunaId) {
+        const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"]`);
+        const taskCount = coluna.querySelectorAll('.task-card').length;
+        coluna.querySelector('.task-count').textContent = taskCount;
+    }
+
+    // Vincular o botão global de adicionar tarefa
+    document.getElementById('add-task-btn').addEventListener('click', function () {
+        const colunaId = prompt("Digite o ID da coluna (1: Backlog, 2: A Fazer, 3: Em Progresso, 5: Concluído):");
+        if (colunaId) {
+            adicionarTarefa(colunaId);
+        }
+    });
+
+    // Vincular os botões de adicionar tarefa em cada coluna
+    document.querySelectorAll('.add-task-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const colunaId = this.getAttribute('data-coluna-id');
+            adicionarTarefa(colunaId);
+        });
+    });
+
+    // Função para carregar tarefas do banco de dados e adicioná-las às colunas
+    async function carregarTarefas() {
+        try {
+            const response = await fetch('../auth/php/tasks/get_tasks.php');
+            const tarefas = await response.json();
+
+            if (tarefas.success) {
+                tarefas.data.forEach(tarefa => {
+                    const coluna = document.querySelector(`.kanban-column[data-coluna-id="${tarefa.coluna_id}"] .task-list`);
+                    if (coluna) {
+                        const taskCard = document.createElement('div');
+                        taskCard.classList.add('task-card');
+                        taskCard.setAttribute('draggable', 'true');
+                        taskCard.innerHTML = `
+                            <div class="task-content">
+                                <h3 class="task-title">${tarefa.titulo}</h3>
+                            </div>
+                            <div class="task-meta">
+                                <div class="task-status">
+                                    <i class="fas fa-spinner status-icon in-progress"></i>
+                                    <span>${tarefa.prioridade}</span>
+                                </div>
+                                <div class="task-dates">
+                                    <small><strong>Início:</strong> ${tarefa.data_inicio}</small>
+                                    <small><strong>Final:</strong> ${tarefa.data_final || 'Não definido'}</small>
+                                </div>
+                                <div class="task-progress">
+                                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
+                                    <progress class="progress-bar" value="${tarefa.progresso}" max="100"></progress>
+                                    <small class="progress-percentage">${tarefa.progresso}%</small>
+                                </div>
+                            </div>
+                        `;
+                        coluna.appendChild(taskCard);
+                    }
+                });
+            } else {
+                console.error('Erro ao carregar tarefas:', tarefas.message);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar tarefas:', error);
+        }
+    }
+
+    // Carregar tarefas ao carregar a página
+    carregarTarefas();
+  </script>
 </body>
 </html>
