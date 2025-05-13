@@ -1,41 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban - Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Metadados da página -->
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página responsiva -->
+    <title>Kanban - Login</title> <!-- Título da página exibido na aba do navegador -->
+    <link rel="stylesheet" href="css/style.css"> <!-- Link para o arquivo CSS que estiliza a página -->
 </head>
-<body class="login-page">
+<body class="login-page"> <!-- Define a classe "login-page" para estilização específica -->
+    <!-- Barra superior com link para criar uma conta -->
     <div class="top-bar">
-        Não tem uma conta? <a href="php/users/register.php" class="btn-top-bar">Criar uma conta</a>
+        Não tem uma conta? <a href="php/users/register.php" class="btn-top-bar">Criar uma conta</a> <!-- Link para a página de registro -->
     </div>
-    <div class="container">
-        <h2>Bem-vindo de volta!</h2>
-        <div id="error-message" class="error-message" style="display: none;"></div>
 
-        <form id="login-form">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
-            
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-            
-            <button type="submit">Entrar</button>
+    <!-- Container principal do formulário de login -->
+    <div class="container">
+        <h2>Bem-vindo de volta!</h2> <!-- Título da página de login -->
+
+        <!-- Div para exibir mensagens de erro -->
+        <div id="error-message" class="error-message" style="display: none;"></div> <!-- Inicialmente oculta -->
+
+        <!-- Formulário de login -->
+        <form id="login-form"> <!-- Formulário com ID "login-form" -->
+            <label for="email">E-mail:</label> <!-- Rótulo para o campo de e-mail -->
+            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required> <!-- Campo de entrada para o e-mail -->
+
+            <label for="password">Senha:</label> <!-- Rótulo para o campo de senha -->
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required> <!-- Campo de entrada para a senha -->
+
+            <button type="submit">Entrar</button> <!-- Botão para enviar o formulário -->
         </form>
-        <a class="link" href="#">Esqueci minha senha?</a>
+
+        <!-- Link para recuperação de senha -->
+        <a class="link" href="#">Esqueci minha senha?</a> <!-- Link para recuperação de senha (ainda não funcional) -->
     </div>
+
+    <!-- Texto no rodapé -->
     <div class="footer-text">
-        Este site é protegido pelo Jardel e regido pela política de privacidade e pelos termos de serviço da Adese.
+        Este site é protegido pelo Alex e regido pela política de privacidade e pelos termos de serviço da Adese. <!-- Texto informativo -->
     </div>
-    <script src="js/auth.js"></script>
+
+    <!-- Inclusão do arquivo JavaScript para autenticação -->
+    <script src="js/auth.js"></script> <!-- Script que gerencia a lógica de autenticação -->
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const errorMessage = urlParams.get('erro');
+        // Captura os parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search); // Obtém os parâmetros da URL
+        const errorMessage = urlParams.get('erro'); // Verifica se há um parâmetro "erro"
+
+        // Exibe a mensagem de erro, se existir
         if (errorMessage) {
-            const errorDiv = document.getElementById('error-message');
-            errorDiv.textContent = decodeURIComponent(errorMessage);
-            errorDiv.style.display = 'block';
+            const errorDiv = document.getElementById('error-message'); // Seleciona a div de mensagens de erro
+            errorDiv.textContent = decodeURIComponent(errorMessage); // Decodifica e exibe a mensagem de erro
+            errorDiv.style.display = 'block'; // Torna a mensagem visível
         }
     </script>
 </body>

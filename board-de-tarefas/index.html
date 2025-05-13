@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Metadados da página -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kavod</title>
+  <!-- Link para o arquivo CSS principal -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Link para a biblioteca de ícones Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
@@ -12,20 +15,26 @@
     <!-- Cabeçalho da aplicação -->
     <header class="app-header">
       <div class="logo">
+        <!-- Logotipo e título da aplicação -->
         <i class="fas fa-tasks"></i>
         <span>Gerenciador de Tarefas - Kavod</span>
       </div>
       <div class="search-bar">
+        <!-- Barra de pesquisa -->
         <i class="fas fa-search"></i>
         <input type="text" placeholder="Pesquisar em tudo...">
         <span class="shortcut">Ctrl + K</span>
       </div>
       <div class="header-actions">
+        <!-- Botão global para adicionar tarefas -->
         <button id="add-task-btn" class="btn btn-task"><i class="fas fa-plus"></i> Tarefa</button>
+        <!-- Nome do usuário logado -->
         <span id="user-name" class="user-name"></span>
+        <!-- Avatar do perfil do usuário -->
         <div class="user-profile">
           <img src="https://via.placeholder.com/32" alt="Perfil" class="avatar">
         </div>
+        <!-- Botão para logout -->
         <button id="logout-btn" class="logout-btn">Sair</button>
       </div>
     </header>
@@ -35,7 +44,9 @@
       <!-- Sidebar esquerda -->
       <aside class="sidebar">
         <nav class="main-nav">
+          <!-- Navegação principal -->
           <ul class="nav-items">
+            <!-- Links de navegação -->
             <li class="nav-item active">
               <i class="fas fa-home"></i>
               <span>Início</span>
@@ -66,6 +77,7 @@
             </li>
           </ul>
 
+          <!-- Seção de favoritos -->
           <div class="sidebar-section">
             <div class="section-header">
               <span>Favoritos</span>
@@ -73,6 +85,7 @@
             </div>
           </div>
 
+          <!-- Seção de itens recentes -->
           <div class="sidebar-section">
             <div class="section-header">
               <span>Recentes</span>
@@ -94,6 +107,7 @@
             </ul>
           </div>
 
+          <!-- Seção de espaços -->
           <div class="sidebar-section">
             <div class="section-header">
               <span>Espaços</span>
@@ -129,6 +143,7 @@
         <div class="project-header">
           <div class="project-title">
             <div class="project-info">
+              <!-- Informações do projeto -->
               <span class="project-status">Público</span>
               <span class="separator">•</span>
               <span class="project-location">
@@ -138,6 +153,7 @@
             </div>
           </div>
 
+          <!-- Ações do projeto -->
           <div class="project-actions">
             <button class="btn btn-outline"><i class="fas fa-user-plus"></i> Agentes</button>
             <button class="btn btn-outline"><i class="fas fa-bolt"></i> Automatizar</button>
@@ -149,6 +165,7 @@
         <!-- Navegação do projeto -->
         <div class="project-nav">
           <ul class="view-tabs">
+            <!-- Abas de visualização -->
             <li class="view-tab active"><i class="fas fa-list"></i> Lista</li>
             <li class="view-tab"><i class="fas fa-th-large"></i> Quadro</li>
             <li class="view-tab"><i class="fas fa-calendar"></i> Calendário</li>
@@ -156,6 +173,7 @@
             <li class="view-tab"><i class="fas fa-table"></i> Tabela</li>
           </ul>
           <div class="view-actions">
+            <!-- Ações de visualização -->
             <button class="btn btn-outline"><i class="fas fa-filter"></i> Filtro</button>
             <button class="btn btn-outline"><i class="fas fa-lock"></i> Fechado</button>
             <button class="btn btn-outline"><i class="fas fa-user"></i> Responsável</button>
@@ -174,7 +192,6 @@
                 <span class="task-count">0</span>
               </div>
               <div class="column-actions">
-                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
                 <button class="btn-icon add-task-btn" data-coluna-id="1"><i class="fas fa-plus"></i></button>
               </div>
             </div>
@@ -190,7 +207,6 @@
                 <span class="task-count">0</span>
               </div>
               <div class="column-actions">
-                <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
                 <button class="btn-icon add-task-btn" data-coluna-id="2"><i class="fas fa-plus"></i></button>
               </div>
             </div>
@@ -203,79 +219,14 @@
               <div class="column-title">
                 <i class="fas fa-spinner status-icon in-progress"></i>
                 <span>EM PROGRESSO</span>
-                <span class="task-count">2</span>
+                <span class="task-count">0</span>
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
                 <button class="btn-icon add-task-btn" data-coluna-id="3"><i class="fas fa-plus"></i></button>
               </div>
             </div>
-            
-            <div class="task-list">
-              <div class="task-card" draggable="true">
-                <div class="task-content">
-                  <h3 class="task-title">Tarefa 1</h3>
-                </div>
-                <div class="task-meta">
-                  <div class="task-status">
-                    <i class="fas fa-spinner status-icon in-progress"></i>
-                    <span>EM PROGRESSO</span>
-                  </div>
-                  <div class="task-dates">
-                    <small><strong>Início:</strong> <span class="start-date"></span></small>
-                    <small>
-                      <strong>Final:</strong>
-                      <input type="date" class="end-date" />
-                    </small>
-                  </div>
-                  <div class="task-progress">
-                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
-                    <progress class="progress-bar" value="0" max="100"></progress>
-                    <small class="progress-percentage">0%</small>
-                  </div>
-                </div>
-                <div class="task-actions">
-                  <button class="btn-icon"><i class="fas fa-comment"></i></button>
-                  <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                </div>
-              </div>
-              
-              <div class="task-card" draggable="true">
-                <div class="task-content">
-                  <h3 class="task-title">Tarefa importante</h3>
-                </div>
-                <div class="task-meta">
-                  <div class="task-assignee">
-                    <i class="fas fa-user"></i>
-                  </div>
-                  <div class="task-status">
-                    <i class="fas fa-spinner status-icon in-progress"></i>
-                    <span>EM PROGRESSO</span>
-                  </div>
-                  <div class="task-dates">
-                    <p><strong>Início:</strong> <span class="start-date"></span></p>
-                    <p>
-                      <strong>Final:</strong>
-                      <input type="date" class="end-date" />
-                    </p>
-                  </div>
-                  <div class="task-progress">
-                    <label for="progress-bar"><strong>Progresso:</strong></label>
-                    <progress class="progress-bar" value="0" max="100"></progress>
-                    <span class="progress-percentage">0%</span>
-                  </div>
-                  <div class="task-actions">
-                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
-                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="add-task">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Tarefa</span>
-              </div>
-            </div>
+            <div class="task-list"></div>
           </div>
           
           <!-- Coluna "Em Revisão/Teste" -->
@@ -284,86 +235,18 @@
               <div class="column-title">
                 <i class="fas fa-check status-icon review"></i>
                 <span>EM REVISÃO/TESTE</span>
-                <span class="task-count">2</span>
+                <span class="task-count">0</span> <!-- Atualizado para 0 -->
               </div>
               <div class="column-actions">
                 <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                <button class="btn-icon"><i class="fas fa-plus"></i></button>
+                <button class="btn-icon add-task-btn" data-coluna-id="4"><i class="fas fa-plus"></i></button>
               </div>
             </div>
-            
-            <div class="task-list">
-              <div class="task-card" draggable="true">
-                <div class="task-content">
-                  <h3 class="task-title">Tarefa 2</h3>
-                </div>
-                <div class="task-meta">
-                  <div class="task-assignee">
-                    <i class="fas fa-user"></i>
-                  </div>
-                  <div class="task-status">
-                    <i class="fas fa-check status-icon review"></i>
-                    <span>EM REVISÃO/TESTE</span>
-                  </div>
-                  <div class="task-dates">
-                    <p><strong>Início:</strong> <span class="start-date"></span></p>
-                    <p>
-                      <strong>Final:</strong>
-                      <input type="date" class="end-date" />
-                    </p>
-                  </div>
-                  <div class="task-progress">
-                    <label for="progress-bar"><strong>Progresso:</strong></label>
-                    <progress class="progress-bar" value="0" max="100"></progress>
-                    <span class="progress-percentage">0%</span>
-                  </div>
-                  <div class="task-actions">
-                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
-                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="task-card" draggable="true">
-                <div class="task-content">
-                  <h3 class="task-title">Tarefa 3</h3>
-                </div>
-                <div class="task-meta">
-                  <div class="task-assignee">
-                    <i class="fas fa-user"></i>
-                  </div>
-                  <div class="task-status">
-                    <i class="fas fa-check status-icon review"></i>
-                    <span>EM REVISÃO/TESTE</span>
-                  </div>
-                  <div class="task-dates">
-                    <p><strong>Início:</strong> <span class="start-date"></span></p>
-                    <p>
-                      <strong>Final:</strong>
-                      <input type="date" class="end-date" />
-                    </p>
-                  </div>
-                  <div class="task-progress">
-                    <label for="progress-bar"><strong>Progresso:</strong></label>
-                    <progress class="progress-bar" value="0" max="100"></progress>
-                    <span class="progress-percentage">0%</span>
-                  </div>
-                  <div class="task-actions">
-                    <button class="btn-icon"><i class="fas fa-comment"></i></button>
-                    <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="add-task">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Tarefa</span>
-              </div>
-            </div>
+            <div class="task-list"></div>
           </div>
 
           <!-- Coluna "Concluído" -->
-          <div class="kanban-column" data-coluna-id="5">
+          <div class="kanban-column completed-column" data-coluna-id="5">
             <div class="column-header">
               <div class="column-title">
                 <i class="fas fa-check-circle status-icon completed"></i>
@@ -375,29 +258,14 @@
                 <button class="btn-icon add-task-btn" data-coluna-id="5"><i class="fas fa-plus"></i></button>
               </div>
             </div>
-            <div class="task-list">
-              <div class="add-task">
-                <i class="fas fa-plus"></i>
-                <span>Adicionar Tarefa</span>
-              </div>
-            </div>
+            <div class="task-list"></div>
           </div>
 
-          <!-- Coluna "Lixeira" -->
-          <div class="kanban-column trash-bin">
-            <div class="column-header">
-              <div class="column-title">
-                <i class="fas fa-trash-alt status-icon"></i>
-                <span>Lixeira</span>
-              </div>
-            </div>
-            <div class="task-list">
-              Arraste tarefas aqui para excluir
-            </div>
-          </div>
+          <!-- COLUNA LIXEIRA REMOVIDA POR ENQUANTO -->
 
           <!-- Adicionar nova coluna -->
           <div class="add-column">
+            <!-- Restaurado o botão de adicionar nova coluna -->
             <button class="btn-add-column">
               <i class="fas fa-plus"></i>
               <span>Novo status</span>
@@ -408,163 +276,7 @@
     </div>
   </div>
 
+  <!-- Link para o arquivo JavaScript -->
   <script src="js/script.js"></script>
-  <script>
-    // Redirecionar para a página de login se o usuário não estiver logado
-    if (sessionStorage.getItem('loggedIn') !== 'true') {
-      window.location.href = '../auth/login.html';
-    }
-
-    // Exibir o nome do usuário no canto superior direito
-    const userName = sessionStorage.getItem('userName');
-    if (userName) {
-        document.getElementById('user-name').textContent = `Bem-vindo, ${userName}`;
-    }
-
-    // Função para deslogar o usuário
-    document.getElementById('logout-btn').addEventListener('click', function () {
-        sessionStorage.clear(); // Limpar o estado de login
-        window.location.href = '../auth/login.html'; // Redirecionar para a página de login
-    });
-
-    // Função para adicionar uma nova tarefa
-    async function adicionarTarefa(colunaId) {
-        const titulo = prompt("Digite o título da tarefa:");
-        if (titulo) {
-            const usuarioId = sessionStorage.getItem('userId') || null; // Obtém o ID do usuário logado ou define como NULL
-            const novaTarefa = {
-                titulo: titulo.trim(),
-                usuario_id: usuarioId,
-                coluna_id: colunaId,
-                data_inicio: new Date().toISOString().split('T')[0], // Data atual no formato YYYY-MM-DD
-                data_final: null, // Sem data final definida inicialmente
-                prioridade: "Normal", // Prioridade padrão
-                progresso: 0 // Progresso inicial
-            };
-
-            try {
-                // Envia os dados para o backend
-                const response = await fetch('../auth/php/tasks/add_task.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(novaTarefa),
-                });
-
-                const result = await response.json();
-
-                // Certifique-se de que o card só será criado após a confirmação do backend
-                if (result.success) {
-                    const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"] .task-list`);
-                    if (coluna) {
-                        // Cria o card com os dados retornados pelo backend
-                        const taskCard = document.createElement('div');
-                        taskCard.classList.add('task-card');
-                        taskCard.setAttribute('draggable', 'true');
-                        taskCard.setAttribute('data-task-id', result.id); // Adiciona o ID da tarefa
-                        taskCard.innerHTML = `
-                            <div class="task-content">
-                                <h3 class="task-title">${novaTarefa.titulo}</h3>
-                            </div>
-                            <div class="task-meta">
-                                <div class="task-status">
-                                    <i class="fas fa-spinner status-icon in-progress"></i>
-                                    <span>${novaTarefa.prioridade}</span>
-                                </div>
-                                <div class="task-dates">
-                                    <small><strong>Início:</strong> ${novaTarefa.data_inicio}</small>
-                                    <small><strong>Final:</strong> Não definido</small>
-                                </div>
-                                <div class="task-progress">
-                                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
-                                    <progress class="progress-bar" value="${novaTarefa.progresso}" max="100"></progress>
-                                    <small class="progress-percentage">${novaTarefa.progresso}%</small>
-                                </div>
-                            </div>
-                        `;
-                        coluna.appendChild(taskCard);
-                        atualizarContagemTarefas(colunaId);
-                    }
-                } else {
-                    alert("Erro ao salvar a tarefa no banco de dados: " + result.message);
-                }
-            } catch (error) {
-                console.error("Erro ao salvar a tarefa:", error);
-                alert("Erro ao salvar a tarefa no banco de dados.");
-            }
-        }
-    }
-
-    // Atualizar contagem de tarefas em cada coluna
-    function atualizarContagemTarefas(colunaId) {
-        const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"]`);
-        const taskCount = coluna.querySelectorAll('.task-card').length;
-        coluna.querySelector('.task-count').textContent = taskCount;
-    }
-
-    // Vincular o botão global de adicionar tarefa
-    document.getElementById('add-task-btn').addEventListener('click', function () {
-        const colunaId = prompt("Digite o ID da coluna (1: Backlog, 2: A Fazer, 3: Em Progresso, 5: Concluído):");
-        if (colunaId) {
-            adicionarTarefa(colunaId);
-        }
-    });
-
-    // Vincular os botões de adicionar tarefa em cada coluna
-    document.querySelectorAll('.add-task-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const colunaId = this.getAttribute('data-coluna-id');
-            adicionarTarefa(colunaId);
-        });
-    });
-
-    // Função para carregar tarefas do banco de dados e adicioná-las às colunas
-    async function carregarTarefas() {
-        try {
-            const response = await fetch('../auth/php/tasks/get_tasks.php');
-            const tarefas = await response.json();
-
-            if (tarefas.success) {
-                tarefas.data.forEach(tarefa => {
-                    const coluna = document.querySelector(`.kanban-column[data-coluna-id="${tarefa.coluna_id}"] .task-list`);
-                    if (coluna) {
-                        const taskCard = document.createElement('div');
-                        taskCard.classList.add('task-card');
-                        taskCard.setAttribute('draggable', 'true');
-                        taskCard.innerHTML = `
-                            <div class="task-content">
-                                <h3 class="task-title">${tarefa.titulo}</h3>
-                            </div>
-                            <div class="task-meta">
-                                <div class="task-status">
-                                    <i class="fas fa-spinner status-icon in-progress"></i>
-                                    <span>${tarefa.prioridade}</span>
-                                </div>
-                                <div class="task-dates">
-                                    <small><strong>Início:</strong> ${tarefa.data_inicio}</small>
-                                    <small><strong>Final:</strong> ${tarefa.data_final || 'Não definido'}</small>
-                                </div>
-                                <div class="task-progress">
-                                    <label for="progress-bar"><small><strong>Progresso:</strong></small></label>
-                                    <progress class="progress-bar" value="${tarefa.progresso}" max="100"></progress>
-                                    <small class="progress-percentage">${tarefa.progresso}%</small>
-                                </div>
-                            </div>
-                        `;
-                        coluna.appendChild(taskCard);
-                    }
-                });
-            } else {
-                console.error('Erro ao carregar tarefas:', tarefas.message);
-            }
-        } catch (error) {
-            console.error('Erro ao carregar tarefas:', error);
-        }
-    }
-
-    // Carregar tarefas ao carregar a página
-    carregarTarefas();
-  </script>
 </body>
 </html>

@@ -8,10 +8,13 @@
 
 /* Variáveis globais */
 :root {
-  --primary-color: #6366f1;
-  --primary-light: #818cf8;
-  --secondary-color: #4b5563;
-  --light-color: #f9fafb;
+  /* Cores principais */
+  --primary-color: #6366f1; /* Cor primária */
+  --primary-light: #818cf8; /* Cor primária clara */
+  --secondary-color: #4b5563; /* Cor secundária */
+  --light-color: #f9fafb; /* Cor de fundo clara */
+
+  /* Tons de cinza */
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
   --gray-300: #d6dbd1;
@@ -21,34 +24,40 @@
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  --danger-color: #ef4444;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
+
+  /* Cores de alerta */
+  --danger-color: #ef4444; /* Vermelho */
+  --success-color: #10b981; /* Verde */
+  --warning-color: #f59e0b; /* Amarelo */
+
+  /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --border-radius: 6px;
-  --transition: all 0.2s ease;
+
+  /* Outros */
+  --border-radius: 6px; /* Bordas arredondadas */
+  --transition: all 0.2s ease; /* Transição suave */
 }
 
 /* Estilo do corpo */
 body {
-  background-color: var(--gray-100);
-  color: var(--gray-800);
-  line-height: 1.5;
+  background-color: var(--gray-100); /* Fundo claro */
+  color: var(--gray-800); /* Texto escuro */
+  line-height: 1.5; /* Altura da linha */
 }
 
 /* Estilo para listas */
 ul {
-  list-style: none;
+  list-style: none; /* Remove marcadores de lista */
 }
 
 /* Container principal da aplicação */
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* Altura total da tela */
   overflow: hidden;
 }
 
@@ -59,46 +68,46 @@ ul {
   justify-content: space-between;
   padding: 0.75rem 1.5rem;
   background-color: white;
-  border-bottom: 1px solid var(--gray-200);
-  height: 3.5rem;
+  border-bottom: 1px solid var(--gray-200); /* Linha inferior */
+  height: 3.5rem; /* Altura fixa */
 }
 
 /* Logo */
 .logo {
   display: flex;
   align-items: center;
-  font-weight: 600;
-  color: var(--primary-color);
-  gap: 0.5rem;
+  font-weight: 600; /* Texto em negrito */
+  color: var(--primary-color); /* Cor primária */
+  gap: 0.5rem; /* Espaçamento entre ícone e texto */
 }
 
 /* Barra de pesquisa */
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: var(--gray-100);
-  border-radius: var(--border-radius);
+  background-color: var(--gray-100); /* Fundo claro */
+  border-radius: var(--border-radius); /* Bordas arredondadas */
   padding: 0.5rem 0.75rem;
-  width: 30%;
+  width: 30%; /* Largura fixa */
   position: relative;
 }
 
 .search-bar input {
-  border: none;
-  background: transparent;
-  outline: none;
-  width: 100%;
+  border: none; /* Remove borda */
+  background: transparent; /* Fundo transparente */
+  outline: none; /* Remove contorno */
+  width: 100%; /* Ocupa toda a largura */
   margin-left: 0.5rem;
-  color: var(--gray-700);
+  color: var(--gray-700); /* Texto escuro */
 }
 
 /* Atalho na barra de pesquisa */
 .shortcut {
   position: absolute;
-  right: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--gray-500);
-  background-color: var(--gray-200);
+  right: 0.75rem; /* Alinhado à direita */
+  font-size: 0.75rem; /* Texto pequeno */
+  color: var(--gray-500); /* Texto cinza */
+  background-color: var(--gray-200); /* Fundo claro */
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
 }
@@ -107,14 +116,14 @@ ul {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1rem; /* Espaçamento entre os itens */
 }
 
 /* Avatar do usuário */
 .avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 50%; /* Formato circular */
 }
 
 /* Botões */
@@ -131,29 +140,31 @@ ul {
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--primary-color); /* Fundo primário */
+  color: white; /* Texto branco */
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-light);
+  background-color: var(--primary-light); /* Fundo mais claro ao passar o mouse */
 }
 
 .btn-outline {
   background-color: transparent;
-  border: 1px solid var(--gray-300);
-  color: var(--gray-700);
+  border: 1px solid var(--gray-300); /* Borda cinza */
+  color: var(--gray-700); /* Texto escuro */
 }
 
 .btn-outline:hover {
-  background-color: var(--gray-100);
+  background-color: var(--gray-100); /* Fundo claro ao passar o mouse */
 }
 
+/* Botão de adicionar tarefa */
 .btn-task {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--primary-color); /* Fundo primário */
+  color: white; /* Texto branco */
 }
 
+/* Botão com ícone */
 .btn-icon {
   display: flex;
   align-items: center;
@@ -164,27 +175,27 @@ ul {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--gray-600);
+  color: var(--gray-600); /* Ícone cinza */
 }
 
 .btn-icon:hover {
-  background-color: var(--gray-200);
-  color: var(--gray-800);
+  background-color: var(--gray-200); /* Fundo claro ao passar o mouse */
+  color: var(--gray-800); /* Ícone mais escuro */
 }
 
 /* Layout principal */
 .main-container {
   display: flex;
-  height: calc(100vh - 3.5rem);
+  height: calc(100vh - 3.5rem); /* Altura total menos o cabeçalho */
   overflow: hidden;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 260px;
+  width: 260px; /* Largura fixa */
   background-color: white;
-  border-right: 1px solid var(--gray-200);
-  overflow-y: auto;
+  border-right: 1px solid var(--gray-200); /* Linha divisória */
+  overflow-y: auto; /* Rolagem vertical */
   height: 100%;
 }
 
@@ -202,19 +213,19 @@ ul {
   align-items: center;
   padding: 0.5rem 0.75rem;
   border-radius: var(--border-radius);
-  color: var(--gray-700);
+  color: var(--gray-700); /* Texto escuro */
   cursor: pointer;
   margin-bottom: 0.25rem;
-  gap: 0.75rem;
+  gap: 0.75rem; /* Espaçamento entre ícone e texto */
 }
 
 .nav-item:hover {
-  background-color: var(--gray-100);
+  background-color: var(--gray-100); /* Fundo claro ao passar o mouse */
 }
 
 .nav-item.active {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--primary-color); /* Fundo primário */
+  color: white; /* Texto branco */
 }
 
 /* Seções da sidebar */
@@ -228,7 +239,7 @@ ul {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  color: var(--gray-600);
+  color: var(--gray-600); /* Texto cinza */
   font-weight: 600;
   font-size: 0.875rem;
 }
@@ -491,87 +502,7 @@ ul {
   width: 100%; /* Ocupa toda a largura disponível */
 }
 
-.progress-bar {
-  width: 100%; /* Garante que a barra ocupe toda a largura disponível */
-  height: 8px; /* Altura da barra */
-  border-radius: 4px; /* Bordas arredondadas */
-  background-color: var(--gray-300); /* Cor de fundo da barra */
-  position: relative;
-  overflow: hidden;
-  appearance: none; /* Remove estilos padrão */
-}
-
-.progress-bar::-webkit-progress-bar {
-  background-color: var(--gray-300); /* Fundo da barra */
-  border-radius: 4px;
-}
-
-.progress-bar::-webkit-progress-value {
-  background-color: var(--primary-color); /* Cor do progresso */
-  border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease; /* Transição suave */
-}
-
-.progress-bar::-moz-progress-bar {
-  background-color: var(--primary-color); /* Cor do progresso */
-  border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease; /* Transição suave */
-}
-
-/* Cores dinâmicas para o progresso */
-.progress-bar[value="0"]::-webkit-progress-value,
-.progress-bar[value="0"]::-moz-progress-bar {
-  background-color: var(--gray-400); /* Cinza para 0% */
-}
-
-.progress-bar[value="25"]::-webkit-progress-value,
-.progress-bar[value="25"]::-moz-progress-bar {
-  background-color: var(--warning-color); /* Amarelo para 25% */
-}
-
-.progress-bar[value="50"]::-webkit-progress-value,
-.progress-bar[value="50"]::-moz-progress-bar {
-  background-color: var(--primary-color); /* Azul para 50% */
-}
-
-.progress-bar[value="75"]::-webkit-progress-value,
-.progress-bar[value="75"]::-moz-progress-bar {
-  background-color: var(--success-color); /* Verde para 75% */
-}
-
-.progress-bar[value="100"]::-webkit-progress-value,
-.progress-bar[value="100"]::-moz-progress-bar {
-  background-color: var(--danger-color); /* Vermelho para 100% */
-}
-
-.progress-percentage {
-  font-size: 0.875rem; /* Aumenta o tamanho da fonte */
-  color: var(--gray-600);
-  text-align: right; /* Alinha o texto à direita */
-}
-
-.task-actions {
-  display: flex;
-  justify-content: flex-end; /* Alinha os botões à direita */
-  gap: 0.5rem; /* Espaçamento entre os botões */
-}
-
-.task-actions .btn-delete {
-  color: #ffffff; /* Ícone branco */
-  background-color: transparent; /* Fundo transparente */
-  border: none; /* Remove borda */
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.task-actions .btn-delete:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Fundo branco translúcido ao passar o mouse */
-}
+/* Removidos os estilos relacionados à barra de progresso */
 
 /* Botão para adicionar tarefas */
 .add-task {
@@ -619,22 +550,22 @@ ul {
 /* Responsividade */
 @media (max-width: 768px) {
   .sidebar {
-    width: 60px;
+    width: 60px; /* Sidebar reduzida */
   }
 
   .sidebar .nav-item span,
   .sidebar .section-header span,
   .sidebar .section-item span {
-    display: none;
+    display: none; /* Esconde textos */
   }
 
   .project-actions,
   .view-actions {
-    display: none;
+    display: none; /* Esconde ações */
   }
 
   .kanban-column {
-    min-width: 250px;
+    min-width: 250px; /* Colunas mais estreitas */
   }
 }
 
@@ -654,18 +585,6 @@ ul {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 8px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-percentage {
-  font-size: 0.75rem;
-  color: var(--gray-600);
 }
 
 /* Estilos para cores de fundo e fonte dos cartões */
@@ -736,102 +655,6 @@ ul {
   font-size: 0.875rem;
   font-weight: bold;
   color: var(--gray-700);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background-color: var(--gray-300);
-  appearance: none;
-  overflow: hidden;
-}
-
-.progress-bar::-webkit-progress-bar {
-  background-color: var(--gray-300);
-  border-radius: 4px;
-}
-
-.progress-bar::-webkit-progress-value {
-  background-color: var(--primary-color);
-  border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-.progress-bar::-moz-progress-bar {
-  background-color: var(--primary-color);
-  border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease;
-}
-
-/* Cores dinâmicas para o progresso */
-.progress-bar[value="0"]::-webkit-progress-value,
-.progress-bar[value="0"]::-moz-progress-bar {
-  background-color: var(--gray-400); /* Cinza para 0% */
-}
-
-.progress-bar[value="25"]::-webkit-progress-value,
-.progress-bar[value="25"]::-moz-progress-bar {
-  background-color: var(--warning-color); /* Amarelo para 25% */
-}
-
-.progress-bar[value="50"]::-webkit-progress-value,
-.progress-bar[value="50"]::-moz-progress-bar {
-  background-color: var(--primary-color); /* Azul para 50% */
-}
-
-.progress-bar[value="75"]::-webkit-progress-value,
-.progress-bar[value="75"]::-moz-progress-bar {
-  background-color: var(--success-color); /* Verde para 75% */
-}
-
-.progress-bar[value="100"]::-webkit-progress-value,
-.progress-bar[value="100"]::-moz-progress-bar {
-  background-color: var(--danger-color); /* Vermelho para 100% */
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background-color: var(--gray-300);
-  appearance: none;
-  overflow: hidden;
-}
-
-.progress-bar::-webkit-slider-runnable-track {
-  background-color: var(--gray-300);
-  border-radius: 4px;
-  height: 8px;
-}
-
-.progress-bar::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.progress-bar::-moz-range-track {
-  background-color: var(--gray-300);
-  border-radius: 4px;
-  height: 8px;
-}
-
-.progress-bar::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.progress-percentage {
-  font-size: 0.875rem;
-  color: var(--gray-600);
-  text-align: right;
 }
 
 /* Estilos para a seleção de prioridade */
@@ -914,4 +737,26 @@ ul {
 .logout-btn:active {
   background-color: #493981;
   transform: scale(0.95);
+}
+
+/* Estilo para a área "Arraste aqui" */
+.drop-zone {
+    text-align: center;
+    color: #aaa;
+    font-style: italic;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    background-color: #f0f0f0;
+    border-color: #888;
+}
+
+/* Estilo específico para a coluna "Concluído" */
+.completed-column .task-card {
+    background-color: var(--completed-color, #021302); /* Verde padrão */
+    color: #fff;
 }

@@ -1,93 +1,102 @@
-
-/*Fundo principal*/
+/* Estilo do fundo principal da página */
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(to top left, #ec008c, #673ab7);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    display: flex; /* Define o layout como flexbox */
+    flex-direction: column; /* Organiza os elementos em coluna */
+    align-items: center; /* Centraliza os elementos horizontalmente */
+    justify-content: center; /* Centraliza os elementos verticalmente */
+    height: 100vh; /* Altura total da janela */
+    background: linear-gradient(to top left, #ec008c, #673ab7); /* Fundo com gradiente */
+    background-repeat: no-repeat; /* Evita repetição do fundo */
+    background-attachment: fixed; /* Fundo fixo ao rolar a página */
+    background-position: center; /* Centraliza o fundo */
+    margin: 0; /* Remove margens padrão */
+    font-family: 'Segoe UI', sans-serif; /* Define a fonte padrão */
 }
 
+/* Container principal do formulário de registro */
 .register-container {
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    background: #fff; /* Fundo branco */
+    padding: 20px 30px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%; /* Largura total */
+    max-width: 400px; /* Largura máxima */
 }
 
+/* Estilo do título principal */
 h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    text-align: center; /* Centraliza o texto */
+    color: #333; /* Cor do texto */
+    margin-bottom: 20px; /* Espaçamento inferior */
 }
 
+/* Estilo do formulário */
 form {
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Define o layout como flexbox */
+    flex-direction: column; /* Organiza os elementos em coluna */
 }
 
+/* Estilo dos rótulos dos campos */
 label {
-    margin-bottom: 5px;
-    color: #555;
+    margin-bottom: 5px; /* Espaçamento inferior */
+    color: #555; /* Cor do texto */
 }
 
+/* Estilo dos campos de entrada */
 input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    margin-bottom: 15px; /* Espaçamento inferior */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
 }
 
+/* Estilo do botão de envio */
 button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 10px; /* Espaçamento interno */
+    background-color: #007bff; /* Fundo azul */
+    color: #fff; /* Texto branco */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
 }
 
+/* Efeito ao passar o mouse sobre o botão */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Fundo azul mais escuro */
 }
 
+/* Estilo da mensagem de feedback */
 .feedback {
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 4px;
-    font-size: 14px;
+    margin-bottom: 15px; /* Espaçamento inferior */
+    padding: 10px; /* Espaçamento interno */
+    background-color: #d4edda; /* Fundo verde claro */
+    color: #155724; /* Texto verde escuro */
+    border: 1px solid #c3e6cb; /* Borda verde clara */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
 }
 
-/*Botão Volte para logar*/
+/* Estilo da barra superior com o botão de voltar */
 .top-bar {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 14px;
-    color: white;
+    position: absolute; /* Posicionamento absoluto */
+    top: 20px; /* Distância do topo */
+    right: 30px; /* Distância da direita */
+    font-size: 14px; /* Tamanho da fonte */
+    color: white; /* Cor do texto */
 }
 
+/* Estilo do botão "Voltar para logar" */
 .back-to-login {
-    background-color: #7b5dfa;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    text-decoration: none;
+    background-color: #7b5dfa; /* Fundo roxo */
+    color: white; /* Texto branco */
+    padding: 10px 16px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado */
 }
 
+/* Efeito ao passar o mouse sobre o botão "Voltar para logar" */
 .back-to-login:hover {
-    background-color: #5a3dbf;
+    background-color: #5a3dbf; /* Fundo roxo mais escuro */
 }
