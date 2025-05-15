@@ -1,52 +1,75 @@
 <?php
-// Define o cabeçalho da resposta como JSON
+ob_start();
+require_once '../db_connection.php';
+
 header('Content-Type: application/json');
 
-// Estabelece a conexão com o banco de dados
-$conn = new mysqli("localhost", "root", "", "kanban_ads");
+// Receber e validar JSON
+$data = json_decode(file_get_contents('php://input'), true);
 
-// Verifica se houve erro na conexão com o banco de dados
-if ($conn->connect_error) {
-    // Retorna uma mensagem de erro em formato JSON e encerra o script
-    echo json_encode(['success' => false, 'message' => 'Erro de conexão com o banco de dados.']);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("Erro ao decodificar JSON: " . json_last_error_msg());
+    echo json_encode(['success' => false, 'message' => 'JSON inválido.']);
+    ob_end_flush();
     exit;
 }
 
-// Recebe os dados enviados pelo frontend no formato JSON
-$data = json_decode(file_get_contents('php://input'), true);
-
-// Valida e extrai os dados recebidos
-$titulo = trim($data['titulo'] ?? ''); // Título da tarefa (obrigatório)
-$usuario_id = $data['usuario_id'] ?? null; // ID do usuário associado à tarefa (opcional)
-$coluna_id = $data['coluna_id'] ?? null; // ID da coluna onde a tarefa será adicionada (obrigatório)
-$data_inicio = $data['data_inicio'] ?? null; // Data de início da tarefa (obrigatório)
-$data_final = $data['data_final'] ?? null; // Data final da tarefa (opcional)
-$prioridade = $data['prioridade'] ?? 'Normal'; // Prioridade da tarefa (valor padrão: "Normal")
-$progresso = $data['progresso'] ?? 0; // Progresso da tarefa (valor padrão: 0)
-
-// Verifica se os dados obrigatórios foram fornecidos
-if (!empty($titulo) && !empty($coluna_id) && !empty($data_inicio)) {
-    // Prepara a consulta SQL para inserir a nova tarefa no banco de dados
-    $stmt = $conn->prepare("INSERT INTO tarefas (titulo, usuario_id, coluna_id, data_inicio, data_final, prioridade, progresso) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    // Associa os valores recebidos aos parâmetros da consulta
-    $stmt->bind_param("siisssi", $titulo, $usuario_id, $coluna_id, $data_inicio, $data_final, $prioridade, $progresso);
-
-    // Executa a consulta SQL
-    if ($stmt->execute()) {
-        // Retorna uma mensagem de sucesso com o ID da tarefa recém-criada
-        echo json_encode(['success' => true, 'message' => 'Tarefa salva com sucesso.', 'id' => $stmt->insert_id]);
-    } else {
-        // Retorna uma mensagem de erro caso a execução da consulta falhe
-        echo json_encode(['success' => false, 'message' => 'Erro ao salvar a tarefa: ' . $stmt->error]);
+// Validação básica
+$required_fields = ['titulo', 'coluna_id'];
+foreach ($required_fields as $field) {
+    if (empty($data[$field])) {
+        error_log("Campo obrigatório ausente: $field");
+        echo json_encode(['success' => false, 'message' => "Campo obrigatório ausente: $field"]);
+        ob_end_flush();
+        exit;
     }
-
-    // Fecha o statement para liberar recursos
-    $stmt->close();
-} else {
-    // Retorna uma mensagem de erro caso os dados obrigatórios estejam ausentes
-    echo json_encode(['success' => false, 'message' => 'Dados incompletos para salvar a tarefa.']);
 }
 
-// Fecha a conexão com o banco de dados
+// Extração e sanitização
+$titulo = trim($data['titulo']);
+$usuario_id = isset($data['usuario_id']) ? (int)$data['usuario_id'] : null;
+$usuario_nome = isset($data['usuario_nome']) && trim($data['usuario_nome']) ? trim($data['usuario_nome']) : 'Desconhecido';
+$coluna_id = (int)$data['coluna_id'];
+$data_inicio = isset($data['data_inicio']) ? $data['data_inicio'] : date('Y-m-d');
+$data_final = isset($data['data_final']) ? $data['data_final'] : date('Y-m-d');
+$prioridade = isset($data['prioridade']) ? trim($data['prioridade']) : 'Normal';
+$progresso = isset($data['progresso']) ? (int)$data['progresso'] : 0;
+
+// Validação de datas
+$date_regex = '/^\d{4}-\d{2}-\d{2}$/';
+if (!preg_match($date_regex, $data_inicio) || !preg_match($date_regex, $data_final)) {
+    echo json_encode(['success' => false, 'message' => 'Datas em formato inválido. Use YYYY-MM-DD.']);
+    ob_end_flush();
+    exit;
+}
+if (strtotime($data_final) < strtotime($data_inicio)) {
+    echo json_encode(['success' => false, 'message' => 'Data final não pode ser anterior à data de início.']);
+    ob_end_flush();
+    exit;
+}
+
+// Inserção segura
+$query = "INSERT INTO tarefas (titulo, usuario_id, usuario_nome, coluna_id, data_inicio, data_final, prioridade, progresso)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($query);
+
+if (!$stmt) {
+    error_log("Erro ao preparar statement: " . $conn->error);
+    echo json_encode(['success' => false, 'message' => 'Erro ao preparar a consulta.']);
+    ob_end_flush();
+    exit;
+}
+
+$stmt->bind_param("sisisssi", $titulo, $usuario_id, $usuario_nome, $coluna_id, $data_inicio, $data_final, $prioridade, $progresso);
+
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => 'Tarefa adicionada com sucesso.', 'id' => $stmt->insert_id]);
+} else {
+    error_log("Erro ao executar consulta: " . $stmt->error);
+    echo json_encode(['success' => false, 'message' => 'Erro ao adicionar tarefa.', 'error' => $stmt->error]);
+}
+
+$stmt->close();
 $conn->close();
+ob_end_flush();
 ?>

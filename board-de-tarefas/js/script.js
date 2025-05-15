@@ -32,40 +32,47 @@ function criarCartaoTarefa(tarefa, coluna) {
   const colorIndex = (colunaId - 1) % cardColors.length;
   taskCard.classList.add(cardColors[colorIndex]);
 
+  // Formata as datas
+  const formatDate = (date) => {
+    if (!date) return 'Não definido';
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   taskCard.innerHTML = `
-      <div class="task-content">
-          <h3 class="task-title">${tarefa.titulo}</h3>
+    <div class="task-content">
+      <h3 class="task-title">${tarefa.titulo}</h3>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">
+        <i class="fas fa-spinner status-icon in-progress"></i>
+        <span>${tarefa.prioridade || 'Normal'}</span>
       </div>
-      <div class="task-meta">
-          <div class="task-status">
-              <i class="fas fa-spinner status-icon in-progress"></i>
-              <span>${tarefa.prioridade || 'Normal'}</span>
-          </div>
-          <div class="task-dates">
-              <small><strong>Início:</strong> ${tarefa.data_inicio || 'Não definido'}</small>
-              <div class="date-final-container">
-                  <label for="end-date-${tarefa.id}"><small><strong>Final:</strong></small></label>
-                  <input type="date" id="end-date-${tarefa.id}" class="end-date" value="${tarefa.data_final || ''}">
-              </div>
-          </div>
-          <div class="task-user">
-              <small><strong>Usuário:</strong> ${tarefa.usuario_nome || 'Desconhecido'}</small>
-          </div>
-          <div class="task-priority">
-              <label for="priority-select"><strong>Prioridade:</strong></label>
-              <select class="priority-select">
-                  <option value="urgente" ${tarefa.prioridade === 'Urgente' ? 'selected' : ''}>Urgente</option>
-                  <option value="alta" ${tarefa.prioridade === 'Alta' ? 'selected' : ''}>Alta</option>
-                  <option value="normal" ${tarefa.prioridade === 'Normal' ? 'selected' : ''}>Normal</option>
-                  <option value="baixa" ${tarefa.prioridade === 'Baixa' ? 'selected' : ''}>Baixa</option>
-              </select>
-          </div>
-          <div class="task-actions">
-              <button class="btn-icon btn-delete"><i class="fas fa-trash"></i></button>
-              <button class="btn-icon"><i class="fas fa-comment"></i></button>
-              <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-          </div>
+      <div class="task-dates">
+        <small><strong>Início:</strong> ${formatDate(tarefa.data_inicio)}</small>
+        <div class="date-final-container">
+          <label for="end-date-${tarefa.id}"><small><strong>Final:</strong></small></label>
+          <input type="date" id="end-date-${tarefa.id}" class="end-date" value="${tarefa.data_final || ''}">
+        </div>
       </div>
+      <div class="task-user">
+        <small><strong>Usuário:</strong> ${tarefa.usuario_nome || 'Desconhecido'}</small>
+      </div>
+      <div class="task-priority">
+        <label for="priority-select-${tarefa.id}"><strong>Prioridade:</strong></label>
+        <select id="priority-select-${tarefa.id}" class="priority-select">
+          <option value="Urgente" ${tarefa.prioridade === 'Urgente' ? 'selected' : ''}>Urgente</option>
+          <option value="Alta" ${tarefa.prioridade === 'Alta' ? 'selected' : ''}>Alta</option>
+          <option value="Normal" ${tarefa.prioridade === 'Normal' ? 'selected' : ''}>Normal</option>
+          <option value="Baixa" ${tarefa.prioridade === 'Baixa' ? 'selected' : ''}>Baixa</option>
+        </select>
+      </div>
+      <div class="task-actions">
+        <button class="btn-icon btn-delete"><i class="fas fa-trash"></i></button>
+        <button class="btn-icon"><i class="fas fa-comment"></i></button>
+        <button class="btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+      </div>
+    </div>
   `;
   coluna.appendChild(taskCard);
 
@@ -96,8 +103,7 @@ function initEndDateInput(taskCard, dataInicio) {
               console.log(`Enviando atualização de data final para o backend:`, {
                   id: taskId,
                   data_final: novaDataFinal || null
-              }); // Log para depuração
-
+              });
               const response = await fetch('../auth/php/tasks/update_task_date.php', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -105,8 +111,7 @@ function initEndDateInput(taskCard, dataInicio) {
               });
 
               const result = await response.json();
-              console.log("Resposta do backend ao atualizar data final:", result); // Log para depuração
-
+              console.log("Resposta do backend ao atualizar data final:", result);
               if (!result.success) {
                   alert("Erro ao atualizar a data final: " + result.message);
               } else {
@@ -161,188 +166,183 @@ async function atualizarColunaTarefa(taskId, novoColunaId) {
   }
 }
 
-// Função reutilizável para solicitar os dados da tarefa
-function solicitarDadosTarefa() {
-  const titulo = prompt("Digite o título da tarefa:");
-  if (!titulo || titulo.trim().length === 0) {
-      alert("O título da tarefa não pode ser vazio.");
-      return null;
-  }
-
-  const usuarioLogado = sessionStorage.getItem('userName');
-  if (!usuarioLogado) {
-      alert("Usuário não está logado.");
-      return null;
-  }
-
-  // Solicita a data final
-  let dataFinal = prompt("Digite a data final (YYYY-MM-DD) ou deixe em branco para 'Não definido':");
-  if (dataFinal && dataFinal.trim().length > 0) {
-      dataFinal = dataFinal.trim();
-      // Valida o formato da data
-      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-      if (!dateRegex.test(dataFinal)) {
-          alert("Formato de data inválido. Use YYYY-MM-DD.");
-          return null;
-      }
-      // Valida se a data final não é anterior à data de início
-      const hoje = new Date().toISOString().split('T')[0];
-      if (dataFinal < hoje) {
-          alert("A data final não pode ser anterior à data de início.");
-          return null;
-      }
+// Função para abrir o modal de adicionar tarefa
+function openModal() {
+  const modal = document.getElementById('add-task-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    console.log("Modal aberto com sucesso.");
+    // Preencher o campo de usuário automaticamente
+    const userInput = document.getElementById('task-user');
+    const userName = sessionStorage.getItem('userName') || 'Desconhecido';
+    if (userInput) {
+      userInput.value = userName;
+    }
   } else {
-      dataFinal = null;
+    console.error("Modal não encontrado no DOM.");
   }
-
-  return {
-      titulo: titulo.trim(),
-      usuarioLogado: usuarioLogado.trim(),
-      dataFinal: dataFinal
-  };
 }
 
-// Função unificada para adicionar uma tarefa
-async function adicionarTarefa(colunaId = null) {
-  const dadosTarefa = solicitarDadosTarefa();
-  if (!dadosTarefa) return;
+// Função para fechar o modal de adicionar tarefa
+function closeModal() {
+  const modal = document.getElementById('add-task-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    const form = document.getElementById('add-task-form');
+    if (form) {
+      form.reset();
+    }
+    console.log("Modal fechado e formulário resetado.");
+  } else {
+    console.error("Modal não encontrado no DOM.");
+  }
+}
 
-  // Se a coluna não for especificada, solicita o ID da coluna
-  if (!colunaId) {
-      colunaId = prompt("Digite o ID da coluna (1: Backlog, 2: A Fazer, 3: Em Progresso, 4: Em Revisão/Teste, 5: Concluído):");
-      if (!colunaId || isNaN(colunaId)) {
-          alert("ID da coluna inválido.");
-          return;
+// Substituir a função solicitarDadosTarefa
+function solicitarDadosTarefa() {
+  return new Promise((resolve) => {
+    console.log("Abrindo modal para adicionar tarefa.");
+    openModal();
+    const form = document.getElementById('add-task-form');
+    if (!form) {
+      console.error("Formulário add-task-form não encontrado.");
+      resolve(null);
+      return;
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const titulo = document.getElementById('task-title').value.trim();
+      const dataInicio = document.getElementById('task-start-date').value;
+      const dataFinal = document.getElementById('task-end-date').value;
+      const prioridade = document.getElementById('task-priority').value;
+      const usuarioNome = document.getElementById('task-user').value.trim();
+
+      console.log("Dados do formulário recebidos:", { titulo, dataInicio, dataFinal, prioridade, usuarioNome });
+
+      // Validações
+      if (!titulo) {
+        alert('O título é obrigatório.');
+        console.log("Validação falhou: Título vazio.");
+        return;
       }
+      if (!dataInicio) {
+        alert('A data de início é obrigatória.');
+        console.log("Validação falhou: Data de início vazia.");
+        return;
+      }
+      if (!dataFinal) {
+        alert('A data final é obrigatória.');
+        console.log("Validação falhou: Data final vazia.");
+        return;
+      }
+      if (new Date(dataFinal) < new Date(dataInicio)) {
+        alert('A data final não pode ser anterior à data de início.');
+        console.log("Validação falhou: Data final anterior à data de início.");
+        return;
+      }
+      if (!prioridade) {
+        alert('A prioridade é obrigatória.');
+        console.log("Validação falhou: Prioridade vazia.");
+        return;
+      }
+      if (!usuarioNome) {
+        alert('O nome do usuário é obrigatório.');
+        console.log("Validação falhou: Nome do usuário vazio.");
+        return;
+      }
+
+      console.log("Dados validados com sucesso, fechando modal.");
+      closeModal();
+      resolve({
+        titulo,
+        dataInicio,
+        dataFinal,
+        prioridade,
+        usuarioNome
+      });
+    }, { once: true });
+  });
+}
+
+async function adicionarTarefa(colunaId = 1) {
+  console.log("Iniciando adição de tarefa, colunaId:", colunaId);
+  const dadosTarefa = await solicitarDadosTarefa();
+  if (!dadosTarefa) {
+    console.log("Nenhum dado retornado, cancelando adição.");
+    return;
   }
 
-  const usuarioId = sessionStorage.getItem('userId') || null;
+  const usuarioId = sessionStorage.getItem('userId') || 1;
   const novaTarefa = {
-      titulo: dadosTarefa.titulo,
-      usuario_id: usuarioId,
-      usuario_nome: dadosTarefa.usuarioLogado,
-      coluna_id: parseInt(colunaId, 10),
-      data_inicio: new Date().toISOString().split('T')[0],
-      data_final: dadosTarefa.dataFinal,
-      prioridade: "Normal",
-      progresso: 0
+    titulo: dadosTarefa.titulo,
+    usuario_id: usuarioId,
+    usuario_nome: dadosTarefa.usuarioNome,
+    coluna_id: colunaId,
+    data_inicio: dadosTarefa.dataInicio,
+    data_final: dadosTarefa.dataFinal,
+    prioridade: dadosTarefa.prioridade,
+    progresso: 0
   };
+
+  console.log("Enviando tarefa para o backend:", novaTarefa);
 
   try {
-      const response = await fetch('../auth/php/tasks/add_task.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(novaTarefa),
-      });
+    const response = await fetch('../auth/php/tasks/add_task.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(novaTarefa),
+    });
 
-      const result = await response.json();
-      if (result.success) {
-          const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"] .task-list`);
-          if (coluna) {
-              criarCartaoTarefa({ ...novaTarefa, id: result.id }, coluna);
-              atualizarContagemTarefas(colunaId);
-          }
+    const result = await response.json();
+    console.log("Resposta do backend:", result);
+
+    if (result.success) {
+      const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"] .task-list`);
+      if (coluna) {
+        console.log("Renderizando novo card na coluna", colunaId);
+        criarCartaoTarefa({ ...novaTarefa, id: result.id }, coluna);
+        atualizarContagemTarefas(colunaId);
       } else {
-          alert("Erro ao salvar a tarefa no banco de dados: " + result.message);
+        console.error("Coluna não encontrada para colunaId:", colunaId);
       }
-  } catch (error) {
-      console.error("Erro ao salvar a tarefa:", error);
-      alert("Erro ao salvar a tarefa no banco de dados.");
-  }
-}
-
-// Atualizar contagem de tarefas em cada coluna
-function atualizarContagemTarefas(colunaId) {
-  const coluna = document.querySelector(`.kanban-column[data-coluna-id="${colunaId}"]`);
-  if (coluna) {
-      const taskCount = coluna.querySelectorAll('.task-card').length;
-      coluna.querySelector('.task-count').textContent = taskCount;
-  }
-}
-
-// Inicializa eventos ao carregar a página
-document.addEventListener('DOMContentLoaded', () => {
-  initAddTaskButtons();
-  initDragAndDrop();
-  initTrashBin();
-  carregarTarefas();
-});
-
-// Inicializa os botões de adicionar tarefa
-function initAddTaskButtons() {
-  // Botão global
-  const globalAddTaskButton = document.getElementById('add-task-btn');
-  if (globalAddTaskButton) {
-      globalAddTaskButton.addEventListener('click', () => {
-          adicionarTarefa();
-      });
-  }
-
-  // Botões de coluna específica
-  const addTaskButtons = document.querySelectorAll('.add-task-btn');
-  addTaskButtons.forEach(button => {
-      button.addEventListener('click', () => {
-          const colunaId = button.getAttribute('data-coluna-id');
-          adicionarTarefa(colunaId);
-      });
-  });
-
-  // Botões .add-task (para consistência com o HTML)
-  const columnAddTaskLinks = document.querySelectorAll('.add-task');
-  columnAddTaskLinks.forEach(link => {
-      link.addEventListener('click', () => {
-          const column = link.closest('.kanban-column');
-          const colunaId = column.getAttribute('data-coluna-id');
-          adicionarTarefa(colunaId);
-      });
-  });
-}
-
-// Atualiza a contagem de tarefas e exibe a mensagem "Arraste tarefa aqui" se a coluna estiver vazia
-function updateTaskCount(column) {
-    const taskList = column.querySelector('.task-list');
-    const taskCount = taskList.querySelectorAll('.task-card').length;
-    column.querySelector('.task-count').textContent = taskCount;
-
-    // Adiciona ou remove a mensagem "Arraste tarefa aqui"
-    let emptyMessage = taskList.querySelector('.empty-message');
-    if (taskCount === 0) {
-        if (!emptyMessage) {
-            emptyMessage = document.createElement('div');
-            emptyMessage.classList.add('empty-message');
-            emptyMessage.textContent = 'Arraste tarefa aqui';
-            taskList.appendChild(emptyMessage);
-        }
-    } else if (emptyMessage) {
-        emptyMessage.remove();
+    } else {
+      alert("Erro ao salvar a tarefa: " + result.message);
+      console.error("Erro ao salvar a tarefa:", result.message);
     }
+  } catch (error) {
+    console.error("Erro ao salvar a tarefa:", error);
+    alert("Erro ao salvar a tarefa no banco de dados.");
+  }
 }
 
 // Carrega tarefas do banco de dados
 async function carregarTarefas() {
-    try {
-        const response = await fetch('../auth/php/tasks/get_tasks.php');
-        const tarefas = await response.json();
-        if (tarefas.success) {
-            tarefas.data.forEach(tarefa => {
-                if (tarefa.titulo && tarefa.coluna_id) {
-                    const coluna = document.querySelector(`.kanban-column[data-coluna-id="${tarefa.coluna_id}"] .task-list`);
-                    if (coluna) {
-                        criarCartaoTarefa(tarefa, coluna);
-                    }
-                }
-            });
+  try {
+    console.log("Carregando tarefas do backend...");
+    const response = await fetch('../auth/php/tasks/get_tasks.php');
+    const tarefas = await response.json();
+    console.log("Resposta do backend ao carregar tarefas:", tarefas);
 
-            // Atualiza a contagem de tarefas para todas as colunas
-            document.querySelectorAll('.kanban-column').forEach(column => {
-                updateTaskCount(column); // Atualiza a contagem e exibe a mensagem "Arraste tarefa aqui" se necessário
-            });
-        } else {
-            console.error('Erro ao carregar tarefas:', tarefas.message);
+    if (tarefas.success) {
+      tarefas.data.forEach(tarefa => {
+        if (tarefa.titulo && tarefa.coluna_id) {
+          const coluna = document.querySelector(`.kanban-column[data-coluna-id="${tarefa.coluna_id}"] .task-list`);
+          if (coluna) {
+            criarCartaoTarefa(tarefa, coluna);
+          }
         }
-    } catch (error) {
-        console.error('Erro ao carregar tarefas:', error);
+      });
+
+      // Atualiza a contagem de tarefas para todas as colunas
+      document.querySelectorAll('.kanban-column').forEach(column => {
+        updateTaskCount(column); // Atualiza a contagem e exibe a mensagem "Arraste tarefa aqui" se necessário
+      });
+    } else {
+      console.error('Erro ao carregar tarefas:', tarefas.message);
     }
+  } catch (error) {
+    console.error('Erro ao carregar tarefas:', error);
+  }
 }
 
 // Inicializa o sistema de drag-and-drop com áreas "Arraste aqui"
@@ -552,4 +552,38 @@ function initTrashBin() {
             }
         });
     }
+}
+
+// Inicializa eventos ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("Inicializando eventos...");
+  initAddTaskButtons();
+  initDragAndDrop();
+  initTrashBin();
+  carregarTarefas();
+});
+
+// Inicializa os botões de adicionar tarefa
+function initAddTaskButtons() {
+  console.log("Inicializando botões de adicionar tarefa...");
+  // Botão global
+  const globalAddTaskButton = document.getElementById('add-task-btn');
+  if (globalAddTaskButton) {
+    globalAddTaskButton.addEventListener('click', () => {
+      console.log("Botão global de adicionar tarefa clicado.");
+      adicionarTarefa();
+    });
+  } else {
+    console.error("Botão global de adicionar tarefa não encontrado.");
+  }
+
+  // Botões de coluna específica
+  const addTaskButtons = document.querySelectorAll('.add-task-btn');
+  addTaskButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const colunaId = button.getAttribute('data-coluna-id');
+      console.log(`Botão de adicionar tarefa clicado para a coluna ${colunaId}.`);
+      adicionarTarefa(colunaId);
+    });
+  });
 }
